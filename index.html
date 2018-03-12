@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<style>
+   *{  margin: 0; padding: 0;  }
+    #box{
+      width: 500px;
+      height: 500px;
+      position: absolute;
+      left: 50%;
+      top:50%;
+      margin-top: -250px;
+      margin-left: -250px;
+      background:rgba(0,232,215,1);
+
+    }
+   .chest {
+     width: 500px;
+     height: 500px;
+     margin: 0 auto;
+     position:absolute;
+   }
+
+   .heart {
+     position: absolute;
+     /*z-index: 1;*/
+     background:linear-gradient(-90deg, #F50A45 0%, #d5093c 40%);
+     animation: beat 1s ease 0s infinite ;
+   }
+
+   .heart.center {
+     background: linear-gradient(-45deg, #B80734 0%, #d5093c 40%);
+   }
+
+   .heart.top {
+     z-index:1;
+   }
+
+   .side {
+     top: 100px;
+     width: 220px;
+     height: 220px;
+     border-radius: 110px;
+   }
+
+   .center {
+     width: 210px;
+     height: 210px;
+     bottom: 100px;
+     left: 145px;
+     transform: rotateZ(225deg);
+     /*transform: rotate(45deg);*/
+   }
+
+   .left {
+     left: 62px;
+   }
+
+   .right {
+     right: 62px;
+   }
+
+
+   @keyframes beat {
+     0% {
+       transform: scale(1) rotate(225deg);
+       box-shadow:0 0 40px #d5093c;
+     }
+
+     50% {
+       transform: scale(1.1) rotate(225deg);
+       box-shadow:0 0 70px #d5093c;
+     }
+     100% {
+       transform: scale(1) rotate(225deg);
+       box-shadow:0 0 40px #d5093c;
+     }
+   }
+
+</style>
+<body>
+  <div id="box">
+    <div class="chest">
+      <div class="heart left side top"></div>
+      <div class="heart center"></div>
+      <div class="heart right side"></div>
+    </div>
+
+  </div>
+</body>
+<script type="text/javascript" src="damu.js"></script>
+<script type="text/javascript">
+  window.onload=function () {
+    document.addEventListener('touchstart',function (ev) {
+      ev=ev||event;
+      ev.preventDefault();
+    })
+
+    var  box = document.querySelector("#box");
+    damu.css(box,"translateZ",0)
+    var scale = 0;
+     var rotate = 0;
+    box.addEventListener("gesturestart",function () {
+        scale = damu.css(this,"scale");
+      rotate = damu.css(this,"rotate");
+       this.style.background = "linear-gradient(-45deg, #B80734 0%, #d5093c 40%);";
+    });
+
+
+    box.addEventListener("gesturechange",function (ev) {
+      ev=ev||event;
+      damu.css(this,"scale",ev.scale*scale);
+      damu.css(this,"rotate",ev.rotation+rotate);
+       this.style.background='rgba(0,0,0,0)'
+    })
+
+     box.addEventListener("gestureend",function () {
+       this.style.background= 'rgba(0,232,215,1)'
+
+     })
+
+  }
+</script>
+</html>
